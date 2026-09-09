@@ -14,13 +14,45 @@
     - refresh aggregated daily data in fact_daily_sales
     - connect to Power BI for reporting
 
+                     ┌──────────────────────────┐
+                     │        dim_product       │
+                     │──────────────────────────│
+                     │ product_key (PK)         │
+                     │ sku                      │
+                     │ product_name             │
+                     │ category                 │
+                     │ department               │
+                     └──────────────┬───────────┘
+                                    │
+                                    │  
+                                    │
+        ┌───────────────────────────┴────────────────────────────┐
+        │                    fact_daily_sales                    │
+        │────────────────────────────────────────────────────────│
+        │ sales_date                                             │
+        │ store_key (FK)                                         │
+        │ product_key (FK)                                       │
+        │ total_quantity_sold                                    │
+        │ total_revenue                                          │
+        │ total_estimated_margin                                 │
+        └───────────────────────────┬────────────────────────────┘
+                                    │                           
+                                    │           
+                                    │                           
+                     ┌──────────────┴──────────────┐   
+                     │         dim_store           │  
+                     │─────────────────────────────│   
+                     │ store_key (PK)              │  
+                     │ store_id                    │   
+                     └─────────────────────────────┘   
 
 ## Orchestration
  - Set tasks in order each dependent on the previous
-    1. 1-ingest-and-clean
-    2. 2-calculate-new-metrics
-    3. 3-load-dim-data
-    4. 4-load-fact-data
+    1. 1-ingest-data
+    2. 2-clean-and-standardize
+    3. 3-calculate-new-metrics
+    4. 4-load-dim-data
+    5. 5-load-fact-data
 
  - Schedule job to run daily, sometime with lower traffic, late evening/early morning
 
@@ -28,8 +60,13 @@
 
 ## Monitoring & Support
 1. Changes in schema
-    - 
+    - Enforce schema early in the bronze layer data so malformed data isn't passed on and job doesn't fail later
+    - Quarantine files with schema anomolies
+    - Log schema drift event
+    - Validate schema before any silver processing, fail job and send alert if validation fails
+
 2. Late data
-    - 
-3. Major differences in data volume
-    - 
+    - Check for expected new files
+    - Check for expected date in the files
+    - Change job to run on file arrival instead of at scheduled time
+    - Log when data was expected vs when it arrived
