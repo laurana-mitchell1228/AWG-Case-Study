@@ -1,5 +1,5 @@
 -- Databricks notebook source
-CREATE TABLE case_study.pubz.fact_daily_sales (
+CREATE TABLE case_study.gold.fact_daily_sales (
     sale_date             DATE NOT NULL,
     store_key             BIGINT NOT NULL,
     product_key           BIGINT NOT NULL,

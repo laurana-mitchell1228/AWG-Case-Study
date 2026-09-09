@@ -1,5 +1,5 @@
 -- Databricks notebook source
-CREATE TABLE case_study.pubz.dim_product (
+CREATE TABLE case_study.gold.dim_product (
     product_key      BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     sku              VARCHAR(50) NOT NULL UNIQUE,
     product_name     VARCHAR(255),
