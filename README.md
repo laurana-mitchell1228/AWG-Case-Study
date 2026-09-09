@@ -14,37 +14,7 @@
     - refresh aggregated daily data in fact_daily_sales
     - connect to Power BI for reporting
 
-                     ┌──────────────────────────┐
-                     │        dim_product       │
-                     │──────────────────────────│
-                     │ product_key (PK)         │
-                     │ sku                      │
-                     │ product_name             │
-                     │ category                 │
-                     │ department               │
-                     └──────────────┬───────────┘
-                                    │
-                                    │  
-                                    │
-        ┌───────────────────────────┴────────────────────────────┐
-        │                    fact_daily_sales                    │
-        │────────────────────────────────────────────────────────│
-        │ sales_date                                             │
-        │ store_key (FK)                                         │
-        │ product_key (FK)                                       │
-        │ total_quantity_sold                                    │
-        │ total_revenue                                          │
-        │ total_estimated_margin                                 │
-        └───────────────────────────┬────────────────────────────┘
-                                    │                           
-                                    │           
-                                    │                           
-                     ┌──────────────┴──────────────┐   
-                     │         dim_store           │  
-                     │─────────────────────────────│   
-                     │ store_key (PK)              │  
-                     │ store_id                    │   
-                     └─────────────────────────────┘   
+![alt text](image.png)
 
 ## Orchestration
  - Set tasks in order each dependent on the previous
